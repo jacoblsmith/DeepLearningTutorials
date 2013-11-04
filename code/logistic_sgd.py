@@ -40,6 +40,7 @@ import gzip
 import os
 import sys
 import time
+from datetime import datetime, timedelta
 
 import numpy
 
@@ -313,7 +314,7 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
     best_params = None
     best_validation_loss = numpy.inf
     test_score = 0.
-    start_time = time.clock()
+    start_time = datetime.now() 
 
     done_looping = False
     epoch = 0
@@ -358,15 +359,15 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
                 done_looping = True
                 break
 
-    end_time = time.clock()
+    end_time = datetime.now()
     print(('Optimization complete with best validation score of %f %%,'
            'with test performance %f %%') %
                  (best_validation_loss * 100., test_score * 100.))
     print 'The code run for %d epochs, with %f epochs/sec' % (
-        epoch, 1. * epoch / (end_time - start_time))
+        epoch, 1. * epoch / (end_time - start_time).total_seconds())
     print >> sys.stderr, ('The code for file ' +
                           os.path.split(__file__)[1] +
-                          ' ran for %.1fs' % ((end_time - start_time)))
+                          ' ran for %.1fs' % ((end_time - start_time).total_seconds()))
 
 if __name__ == '__main__':
     sgd_optimization_mnist()

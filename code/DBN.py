@@ -5,6 +5,7 @@ import gzip
 import os
 import sys
 import time
+from datetime import datetime, timedelta
 
 import numpy
 
@@ -305,7 +306,7 @@ def test_DBN(finetune_lr=0.1, pretraining_epochs=100,
                                                 k=k)
 
     print '... pre-training the model'
-    start_time = time.clock()
+    start_time = datetime.now()
     ## Pre-train layer-wise
     for i in xrange(dbn.n_layers):
         # go through pretraining epochs
@@ -318,10 +319,10 @@ def test_DBN(finetune_lr=0.1, pretraining_epochs=100,
             print 'Pre-training layer %i, epoch %d, cost ' % (i, epoch),
             print numpy.mean(c)
 
-    end_time = time.clock()
+    end_time = datetime.now() 
     print >> sys.stderr, ('The pretraining code for file ' +
                           os.path.split(__file__)[1] +
-                          ' ran for %.2fm' % ((end_time - start_time) / 60.))
+                          ' ran for %.2fm' % ((end_time - start_time).total_seconds() / 60.))
 
     ########################
     # FINETUNING THE MODEL #
@@ -349,7 +350,7 @@ def test_DBN(finetune_lr=0.1, pretraining_epochs=100,
     best_params = None
     best_validation_loss = numpy.inf
     test_score = 0.
-    start_time = time.clock()
+    start_time = datetime.now()
 
     done_looping = False
     epoch = 0
@@ -393,13 +394,13 @@ def test_DBN(finetune_lr=0.1, pretraining_epochs=100,
                 done_looping = True
                 break
 
-    end_time = time.clock()
+    end_time = datetime.now()
     print(('Optimization complete with best validation score of %f %%,'
            'with test performance %f %%') %
                  (best_validation_loss * 100., test_score * 100.))
     print >> sys.stderr, ('The fine tuning code for file ' +
                           os.path.split(__file__)[1] +
-                          ' ran for %.2fm' % ((end_time - start_time)
+                          ' ran for %.2fm' % ((end_time - start_time).total_seconds()
                                               / 60.))
 
 

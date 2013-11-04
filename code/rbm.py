@@ -7,6 +7,7 @@ to those without visible-visible and hidden-hidden connections.
 import cPickle
 import gzip
 import time
+from datetime import datetime, timedelta
 import PIL.Image
 
 import numpy
@@ -380,8 +381,8 @@ def test_rbm(learning_rate=0.1, training_epochs=15,
                                   (index + 1) * batch_size]},
            name='train_rbm')
 
-    plotting_time = 0.
-    start_time = time.clock()
+    plotting_time = timedelta()
+    start_time = datetime.now() 
 
     # go through training epochs
     for epoch in xrange(training_epochs):
@@ -401,14 +402,14 @@ def test_rbm(learning_rate=0.1, training_epochs=15,
                  img_shape=(28, 28), tile_shape=(10, 10),
                  tile_spacing=(1, 1)))
         image.save('filters_at_epoch_%i.png' % epoch)
-        plotting_stop = time.clock()
+        plotting_stop = datetime.now()
         plotting_time += (plotting_stop - plotting_start)
 
-    end_time = time.clock()
+    end_time = datetime.now()
 
     pretraining_time = (end_time - start_time) - plotting_time
 
-    print ('Training took %f minutes' % (pretraining_time / 60.))
+    print ('Training took %f minutes' % (pretraining_time.total_seconds() / 60.))
 
     #################################
     #     Sampling from the RBM     #
