@@ -26,6 +26,7 @@ import gzip
 import os
 import sys
 import time
+from datetime import datetime, timedelta
 
 import numpy
 
@@ -298,7 +299,7 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
     best_validation_loss = numpy.inf
     best_iter = 0
     test_score = 0.
-    start_time = time.clock()
+    start_time = datetime.now()
 
     epoch = 0
     done_looping = False
@@ -345,13 +346,13 @@ def test_mlp(learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001, n_epochs=1000,
                     done_looping = True
                     break
 
-    end_time = time.clock()
+    end_time = datetime.now()
     print(('Optimization complete. Best validation score of %f %% '
            'obtained at iteration %i, with test performance %f %%') %
           (best_validation_loss * 100., best_iter + 1, test_score * 100.))
     print >> sys.stderr, ('The code for file ' +
                           os.path.split(__file__)[1] +
-                          ' ran for %.2fm' % ((end_time - start_time) / 60.))
+                          ' ran for %.2fm' % ((end_time - start_time).total_seconds() / 60.))
 
 
 if __name__ == '__main__':

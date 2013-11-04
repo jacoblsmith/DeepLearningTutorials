@@ -395,7 +395,7 @@ def test_rbm(learning_rate=0.1, training_epochs=15,
         print 'Training epoch %d, cost is ' % epoch, numpy.mean(mean_cost)
 
         # Plot filters after each training epoch
-        plotting_start = time.clock()
+        plotting_start = datetime.now()
         # Construct image from the weight matrix
         image = PIL.Image.fromarray(tile_raster_images(
                  X=rbm.W.get_value(borrow=True).T,
